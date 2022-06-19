@@ -1,23 +1,16 @@
-import "./App.css";
-import { useForm } from "./useForm";
+import { useState } from "react";
+import { useFetch } from "./useFetch";
 
 const App = () => {
-  const [values, handleChange] = useForm({ email: "", password: "" });
+  const [count, setCount] = useState(0);
+  const { data, loading } = useFetch(`http://numbersapi.com/${count}/trivia`);
   return (
     <div>
-      <input
-        name="email"
-        placeholder="Enter Name..."
-        value={values.email}
-        onChange={handleChange}
-      />
-      <input
-        name="password"
-        placeholder="Enter Password..."
-        value={values.password}
-        onChange={handleChange}
-      />
-      <button>Submit</button>
+      <div>{loading ? "loading" : data}</div>
+      <div>Count : {count}</div>
+      <button onClick={() => setCount((current) => setCount(current + 1))}>
+        +
+      </button>
     </div>
   );
 };
